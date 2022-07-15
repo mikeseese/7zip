@@ -607,6 +607,37 @@ void CApp::OnCopy(bool move, bool copyToSame, int srcPanelIndex)
   UStringVector copyFolders;
   ReadCopyHistory(copyFolders);
 
+  UString ArchiveName;
+  for (unsigned int i = 0; i < srcPanel._parentFolders.Size(); i++) {
+    CFolderLink folder = srcPanel._parentFolders[i];
+    if (
+      folder.FileInfo.IsArchived() &&
+      (
+        i + 1 >= srcPanel._parentFolders.Size() ||
+        !srcPanel._parentFolders[i+1].FileInfo.IsArchived()
+      )
+    ) {
+      ArchiveName = folder.FileInfo.Name;
+      int dotIndex = ArchiveName.ReverseFind_Dot();
+      ArchiveName.DeleteFrom(dotIndex);
+      break;
+    }
+  }
+
+  bool addArchiveName = true;
+  if (indices.Size() == 1 && srcPanel.IsItem_Folder(indices[0])) {
+    UString relativePath = srcPanel.GetItemRelPath(indices[0]);
+
+    if (ArchiveName.IsPrefixedBy(relativePath)) {
+      addArchiveName = false;
+    }
+  }
+
+  if (addArchiveName) {
+    destPath += ArchiveName;
+    destPath.Add_PathSepar();
+  }
+
   bool useFullItemPaths = srcPanel.Is_IO_FS_Folder(); // maybe we need flat also here ??
 
   {
