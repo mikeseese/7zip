@@ -1,0 +1,17 @@
+{
+  "tasks": [
+    {
+      "label": "Compile",
+      "type": "shell",
+      "command": "nmake NEW_COMPILER=1 MY_STATIC_LINK=1",
+      "options": {
+        "cwd": "${workspaceFolder}/CPP/7zip"
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
