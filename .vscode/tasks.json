@@ -1,9 +1,9 @@
 {
+  "version": "2.0.0",
   "tasks": [
     {
       "label": "Compile",
       "type": "shell",
-      "command": "nmake NEW_COMPILER=1 MY_STATIC_LINK=1",
       "options": {
         "cwd": "${workspaceFolder}/CPP/7zip"
       },
@@ -11,7 +11,8 @@
       "group": {
         "kind": "build",
         "isDefault": true
-      }
+      },
+      "command": "build.bat",
     }
   ]
 }
